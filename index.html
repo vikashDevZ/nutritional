@@ -3,557 +3,805 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master S-Tier & A-Tier Nutritional Foods Guide</title>
+    <title>Premium Nutritional Foods Guide</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-dark: #0a0a0a;
+            --secondary-dark: #1a1a1a;
+            --accent-green: #00ff88;
+            --accent-orange: #ff6b35;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border-subtle: #2a2a2a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
             min-height: 100vh;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
+            padding: 0 20px;
         }
 
         .header {
-            background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
-            color: white;
-            padding: 30px;
             text-align: center;
+            padding: 80px 0 60px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-green), #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
 
-        .tier-legend {
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tier-nav {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+            gap: 40px;
+            margin: 60px 0;
+            padding: 0 20px;
         }
 
         .tier-badge {
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 0.9em;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px 32px;
             text-align: center;
-            min-width: 200px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .s-tier-badge {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
+        .tier-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .a-tier-badge {
-            background: linear-gradient(135deg, #FF9800, #F57C00);
-            color: white;
+        .tier-badge:hover::before {
+            opacity: 1;
         }
 
-        .content {
-            padding: 30px;
+        .tier-badge.s-tier::before {
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
         }
 
-        .tier-section {
-            margin-bottom: 40px;
+        .tier-badge.a-tier::before {
+            background: linear-gradient(90deg, transparent, var(--accent-orange), transparent);
         }
 
-        .tier-title {
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 10px;
+        .tier-badge:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-green);
+        }
+
+        .tier-badge.a-tier:hover {
+            border-color: var(--accent-orange);
+        }
+
+        .tier-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .tier-badge.s-tier .tier-label {
+            color: var(--accent-green);
+        }
+
+        .tier-badge.a-tier .tier-label {
+            color: var(--accent-orange);
+        }
+
+        .tier-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .section {
+            margin-bottom: 100px;
+        }
+
+        .section-header {
             text-align: center;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            margin-bottom: 60px;
         }
 
-        .s-tier-title {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
         }
 
-        .a-tier-title {
-            background: linear-gradient(135deg, #FF9800, #F57C00);
+        .section-title.s-tier {
+            color: var(--accent-green);
+        }
+
+        .section-title.a-tier {
+            color: var(--accent-orange);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
         }
 
         .foods-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
         }
 
         .food-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 5px solid;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .food-card.a-tier::before {
+            background: linear-gradient(90deg, transparent, var(--accent-orange), transparent);
+        }
+
+        .food-card:hover::before {
+            opacity: 1;
         }
 
         .food-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+            border-color: var(--accent-green);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
         }
 
-        .s-tier-card {
-            border-left-color: #4CAF50;
+        .food-card.a-tier:hover {
+            border-color: var(--accent-orange);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.1);
         }
 
-        .a-tier-card {
-            border-left-color: #FF9800;
+        .food-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
         }
 
         .food-name {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
         }
 
         .food-category {
-            background: #e9ecef;
-            color: #6c757d;
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 0.8em;
-            display: inline-block;
-            margin-bottom: 10px;
+            background: var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .food-benefits {
-            color: #555;
-            line-height: 1.5;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .food-benefits strong {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .food-card.a-tier .food-benefits strong {
+            color: var(--accent-orange);
         }
 
         .comparison-section {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 60px;
+            margin-top: 100px;
+            position: relative;
+        }
+
+        .comparison-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), var(--accent-orange), transparent);
         }
 
         .comparison-title {
-            font-size: 1.5em;
+            font-size: 2.2rem;
+            font-weight: 600;
             text-align: center;
-            margin-bottom: 20px;
-            color: #333;
+            margin-bottom: 40px;
+            letter-spacing: -0.02em;
         }
 
         .comparison-table {
             width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--secondary-dark);
         }
 
         .comparison-table th,
         .comparison-table td {
-            padding: 15px;
+            padding: 24px;
             text-align: left;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .comparison-table th {
-            background: #495057;
-            color: white;
-            font-weight: bold;
+            background: var(--primary-dark);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.02em;
+        }
+
+        .comparison-table td {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
         }
 
         .comparison-table tr:hover {
-            background: #f8f9fa;
+            background: var(--glass-bg);
         }
 
-        .s-tier-cell {
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
-            font-weight: bold;
+        .tier-cell {
+            font-weight: 500;
+            position: relative;
         }
 
-        .a-tier-cell {
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-            font-weight: bold;
+        .tier-cell.s-tier {
+            color: var(--accent-green);
+        }
+
+        .tier-cell.a-tier {
+            color: var(--accent-orange);
+        }
+
+        .tier-cell strong {
+            font-weight: 600;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer::before {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-green), transparent);
+            margin: 0 auto 40px;
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .tier-legend {
+            .tier-nav {
                 flex-direction: column;
                 align-items: center;
+                gap: 20px;
+            }
+            
+            .tier-badge {
+                padding: 20px 24px;
+                max-width: 300px;
             }
             
             .foods-grid {
                 grid-template-columns: 1fr;
             }
             
-            .comparison-table {
-                font-size: 0.9em;
+            .food-card {
+                padding: 24px;
+            }
+            
+            .comparison-section {
+                padding: 40px 24px;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .header {
+                padding: 60px 0 40px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .foods-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .food-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .food-category {
+                align-self: flex-start;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🏆 Master Nutritional Foods Guide</h1>
-            <div class="tier-legend">
-                <div class="tier-badge s-tier-badge">
-                    🟢 S-TIER<br>Maximum micronutrients + antioxidants + functional health value
-                </div>
-                <div class="tier-badge a-tier-badge">
-                    🟡 A-TIER<br>Excellent nutrients, slightly less concentrated or narrower scope
-                </div>
-            </div>
-        </div>
+        <header class="header">
+            <h1>Premium Nutritional Guide</h1>
+            <p>Scientifically-ranked superfoods for optimal health and performance</p>
+        </header>
 
-        <div class="content">
-            <!-- S-TIER FOODS -->
-            <div class="tier-section">
-                <div class="tier-title s-tier-title">
-                    🟩 S-TIER FOODS (SUPERFOODS FROM ALL CATEGORIES)
+        <nav class="tier-nav">
+            <div class="tier-badge s-tier">
+                <div class="tier-label">S-TIER</div>
+                <div class="tier-desc">Maximum micronutrients + antioxidants + functional health value</div>
+            </div>
+            <div class="tier-badge a-tier">
+                <div class="tier-label">A-TIER</div>
+                <div class="tier-desc">Excellent nutrients, slightly less concentrated or narrower scope</div>
+            </div>
+        </nav>
+
+        <main>
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title s-tier">S-Tier Superfoods</h2>
+                    <p class="section-subtitle">Premium foods with exceptional nutritional density across multiple health systems</p>
                 </div>
                 
                 <div class="foods-grid">
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Moringa Leaves</div>
-                        <div class="food-category">Leafy Vegetable</div>
-                        <div class="food-benefits">Iron, calcium, vitamin A & C, antioxidants, inflammation fighter</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Moringa Leaves</h3>
+                            <span class="food-category">Leafy Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Iron, calcium, vitamin A & C, antioxidants, inflammation fighter</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Spinach</div>
-                        <div class="food-category">Leafy Vegetable</div>
-                        <div class="food-benefits">Iron, folate, magnesium, vitamin K</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Spinach</h3>
+                            <span class="food-category">Leafy Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Iron, folate, magnesium, vitamin K</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Amaranth Leaves (Chaulai)</div>
-                        <div class="food-category">Leafy Vegetable</div>
-                        <div class="food-benefits">Protein, calcium, iron, antioxidants</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Amaranth Leaves</h3>
+                            <span class="food-category">Leafy Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Protein, calcium, iron, antioxidants</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Kale</div>
-                        <div class="food-category">Leafy Vegetable</div>
-                        <div class="food-benefits">Vitamin A, C, K, fiber, anti-cancer compounds</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Kale</h3>
+                            <span class="food-category">Leafy Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Vitamin A, C, K, fiber, anti-cancer compounds</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Broccoli</div>
-                        <div class="food-category">Vegetable</div>
-                        <div class="food-benefits">Vitamin C, K, fiber, sulforaphane</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Broccoli</h3>
+                            <span class="food-category">Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Vitamin C, K, fiber, sulforaphane</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Carrot</div>
-                        <div class="food-category">Vegetable</div>
-                        <div class="food-benefits">Beta-carotene (vitamin A), fiber, antioxidants</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Carrot</h3>
+                            <span class="food-category">Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Beta-carotene (vitamin A), fiber, antioxidants</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Sweet Potato</div>
-                        <div class="food-category">Vegetable</div>
-                        <div class="food-benefits">Complex carbs, beta-carotene, potassium</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Sweet Potato</h3>
+                            <span class="food-category">Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Complex carbs, beta-carotene, potassium</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Chickpeas (Desi/Kabuli)</div>
-                        <div class="food-category">Legume</div>
-                        <div class="food-benefits">Protein, iron, fiber, magnesium</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Chickpeas</h3>
+                            <span class="food-category">Legume</span>
+                        </div>
+                        <p class="food-benefits">Protein, iron, fiber, magnesium</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Lentils (Masoor)</div>
-                        <div class="food-category">Legume</div>
-                        <div class="food-benefits">Iron, folate, plant protein</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Lentils</h3>
+                            <span class="food-category">Legume</span>
+                        </div>
+                        <p class="food-benefits">Iron, folate, plant protein</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Green Moong (Whole)</div>
-                        <div class="food-category">Legume</div>
-                        <div class="food-benefits">Protein, fiber, B-complex, digestion-friendly</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Green Moong</h3>
+                            <span class="food-category">Legume</span>
+                        </div>
+                        <p class="food-benefits">Protein, fiber, B-complex, digestion-friendly</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Flaxseeds</div>
-                        <div class="food-category">Seed</div>
-                        <div class="food-benefits">Omega-3 (ALA), lignans, fiber</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Flaxseeds</h3>
+                            <span class="food-category">Seed</span>
+                        </div>
+                        <p class="food-benefits">Omega-3 (ALA), lignans, fiber</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Chia Seeds</div>
-                        <div class="food-category">Seed</div>
-                        <div class="food-benefits">Calcium, omega-3s, soluble fiber</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Chia Seeds</h3>
+                            <span class="food-category">Seed</span>
+                        </div>
+                        <p class="food-benefits">Calcium, omega-3s, soluble fiber</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Pumpkin Seeds</div>
-                        <div class="food-category">Seed</div>
-                        <div class="food-benefits">Zinc, magnesium, protein</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Pumpkin Seeds</h3>
+                            <span class="food-category">Seed</span>
+                        </div>
+                        <p class="food-benefits">Zinc, magnesium, protein</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Almonds</div>
-                        <div class="food-category">Nut</div>
-                        <div class="food-benefits">Vitamin E, calcium, healthy fats</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Almonds</h3>
+                            <span class="food-category">Nut</span>
+                        </div>
+                        <p class="food-benefits">Vitamin E, calcium, healthy fats</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Walnuts</div>
-                        <div class="food-category">Nut</div>
-                        <div class="food-benefits">Omega-3 ALA, copper, brain health</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Walnuts</h3>
+                            <span class="food-category">Nut</span>
+                        </div>
+                        <p class="food-benefits">Omega-3 ALA, copper, brain health</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Pistachios</div>
-                        <div class="food-category">Nut</div>
-                        <div class="food-benefits">Vitamin B6, lutein, antioxidants</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Pistachios</h3>
+                            <span class="food-category">Nut</span>
+                        </div>
+                        <p class="food-benefits">Vitamin B6, lutein, antioxidants</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Brazil Nuts</div>
-                        <div class="food-category">Nut</div>
-                        <div class="food-benefits">Selenium (1–2 nuts = 100% daily need)</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Brazil Nuts</h3>
+                            <span class="food-category">Nut</span>
+                        </div>
+                        <p class="food-benefits">Selenium <strong>(1–2 nuts = 100% daily need)</strong></p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Avocado</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits">Healthy fats, potassium, vitamin E, fiber</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Avocado</h3>
+                            <span class="food-category">Fruit</span>
+                        </div>
+                        <p class="food-benefits">Healthy fats, potassium, vitamin E, fiber</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Guava</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits"><strong>Highest vitamin C</strong>, fiber, vitamin A, folate</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Guava</h3>
+                            <span class="food-category">Fruit</span>
+                        </div>
+                        <p class="food-benefits"><strong>Highest vitamin C</strong>, fiber, vitamin A, folate</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Papaya</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits">Digestive enzymes, vitamin A & C, beta-carotene</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Papaya</h3>
+                            <span class="food-category">Fruit</span>
+                        </div>
+                        <p class="food-benefits">Digestive enzymes, vitamin A & C, beta-carotene</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Pomegranate</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits">Polyphenols, iron, potassium, anti-inflammatory</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Pomegranate</h3>
+                            <span class="food-category">Fruit</span>
+                        </div>
+                        <p class="food-benefits">Polyphenols, iron, potassium, anti-inflammatory</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Amla (Indian Gooseberry)</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits"><strong>10x more vitamin C than orange</strong>, strong antioxidant</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Amla</h3>
+                            <span class="food-category">Fruit</span>
+                        </div>
+                        <p class="food-benefits"><strong>10x more vitamin C than orange</strong>, strong antioxidant</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Blueberries</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits">Anthocyanins, brain-protective antioxidants</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Blueberries</h3>
+                            <span class="food-category">Fruit</span>
+                        </div>
+                        <p class="food-benefits">Anthocyanins, brain-protective antioxidants</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Turmeric</div>
-                        <div class="food-category">Root Herb</div>
-                        <div class="food-benefits">Curcumin = anti-inflammatory, liver support</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Turmeric</h3>
+                            <span class="food-category">Root Herb</span>
+                        </div>
+                        <p class="food-benefits">Curcumin = anti-inflammatory, liver support</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Ginger</div>
-                        <div class="food-category">Root Herb</div>
-                        <div class="food-benefits">Digestion, inflammation, circulation</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Ginger</h3>
+                            <span class="food-category">Root Herb</span>
+                        </div>
+                        <p class="food-benefits">Digestion, inflammation, circulation</p>
                     </div>
                     
-                    <div class="food-card s-tier-card">
-                        <div class="food-name">Curry Leaves</div>
-                        <div class="food-category">Leafy Herb</div>
-                        <div class="food-benefits">Iron, calcium, antioxidant, hair & digestion support</div>
+                    <div class="food-card s-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Curry Leaves</h3>
+                            <span class="food-category">Leafy Herb</span>
+                        </div>
+                        <p class="food-benefits">Iron, calcium, antioxidant, hair & digestion support</p>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- A-TIER FOODS -->
-            <div class="tier-section">
-                <div class="tier-title a-tier-title">
-                    🟨 A-TIER FOODS (NUTRIENT-RICH, BUT LESS DENSE OR SPECIALIZED)
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="section-title a-tier">A-Tier Nutrition</h2>
+                    <p class="section-subtitle">High-quality foods with excellent nutritional profiles and specialized benefits</p>
                 </div>
                 
                 <div class="foods-grid">
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Mustard Greens (Sarson)</div>
-                        <div class="food-category">Leafy Vegetable</div>
-                        <div class="food-benefits">Vitamin K, calcium, vitamin A</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Mustard Greens</h3>
+                            <span class="food-category">Leafy Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Vitamin K, calcium, vitamin A</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Radish Leaves</div>
-                        <div class="food-category">Leafy Vegetable</div>
-                        <div class="food-benefits">Calcium, iron, vitamin C</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Radish Leaves</h3>
+                            <span class="food-category">Leafy Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Calcium, iron, vitamin C</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Beetroot</div>
-                        <div class="food-category">Root Vegetable</div>
-                        <div class="food-benefits">Folate, fiber, blood pressure & stamina</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Beetroot</h3>
+                            <span class="food-category">Root Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Folate, fiber, blood pressure & stamina</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Drumstick Pods</div>
-                        <div class="food-category">Vegetable</div>
-                        <div class="food-benefits">Vitamin C, fiber, anti-inflammatory</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Drumstick Pods</h3>
+                            <span class="food-category">Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Vitamin C, fiber, anti-inflammatory</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Tomato</div>
-                        <div class="food-category">Vegetable</div>
-                        <div class="food-benefits">Lycopene, vitamin C, potassium</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Tomato</h3>
+                            <span class="food-category">Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Lycopene, vitamin C, potassium</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Fenugreek Leaves (Methi)</div>
-                        <div class="food-category">Leafy Vegetable</div>
-                        <div class="food-benefits">Iron, fiber, supports blood sugar</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Fenugreek Leaves</h3>
+                            <span class="food-category">Leafy Vegetable</span>
+                        </div>
+                        <p class="food-benefits">Iron, fiber, supports blood sugar</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Coriander Leaves</div>
-                        <div class="food-category">Herb</div>
-                        <div class="food-benefits">Vitamin C, A, detox aid</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Coriander Leaves</h3>
+                            <span class="food-category">Herb</span>
+                        </div>
+                        <p class="food-benefits">Vitamin C, A, detox aid</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Horse Gram (Kulthi)</div>
-                        <div class="food-category">Legume</div>
-                        <div class="food-benefits">Weight loss, iron, calcium</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Horse Gram</h3>
+                            <span class="food-category">Legume</span>
+                        </div>
+                        <p class="food-benefits">Weight loss, iron, calcium</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Toor Dal (Arhar)</div>
-                        <div class="food-category">Legume</div>
-                        <div class="food-benefits">Protein, folate, energy</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Toor Dal</h3>
+                            <span class="food-category">Legume</span>
+                        </div>
+                        <p class="food-benefits">Protein, folate, energy</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Hemp Seeds</div>
-                        <div class="food-category">Seed</div>
-                        <div class="food-benefits"><strong>Complete protein</strong>, omega-3 & 6</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Hemp Seeds</h3>
+                            <span class="food-category">Seed</span>
+                        </div>
+                        <p class="food-benefits"><strong>Complete protein</strong>, omega-3 & 6</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Sunflower Seeds</div>
-                        <div class="food-category">Seed</div>
-                        <div class="food-benefits">Vitamin E, selenium, magnesium</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Sunflower Seeds</h3>
+                            <span class="food-category">Seed</span>
+                        </div>
+                        <p class="food-benefits">Vitamin E, selenium, magnesium</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Sesame Seeds (Til)</div>
-                        <div class="food-category">Seed</div>
-                        <div class="food-benefits">Calcium, zinc, iron</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Sesame Seeds</h3>
+                            <span class="food-category">Seed</span>
+                        </div>
+                        <p class="food-benefits">Calcium, zinc, iron</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Cashews</div>
-                        <div class="food-category">Nut</div>
-                        <div class="food-benefits">Copper, magnesium, iron</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Cashews</h3>
+                            <span class="food-category">Nut</span>
+                        </div>
+                        <p class="food-benefits">Copper, magnesium, iron</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Hazelnuts</div>
-                        <div class="food-category">Nut</div>
-                        <div class="food-benefits">Vitamin E, manganese</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Hazelnuts</h3>
+                            <span class="food-category">Nut</span>
+                        </div>
+                        <p class="food-benefits">Vitamin E, manganese</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Orange</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits">Vitamin C, hydration, fiber</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Orange</h3>
+                            <span class="food-category">Fruit</span>
+                        </div>
+                        <p class="food-benefits">Vitamin C, hydration, fiber</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Banana</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits">Potassium, vitamin B6, natural energy</div>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Banana</h3>
+                            <span class="food-category">Fruit</span>
+                        </div>
+                        <p class="food-benefits">Potassium, vitamin B6, natural energy</p>
                     </div>
                     
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Apples</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits">Fiber (pectin), antioxidants, digestion aid</div>
-                    </div>
-                    
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Figs (Anjeer)</div>
-                        <div class="food-category">Fruit (Dry)</div>
-                        <div class="food-benefits">Calcium, fiber, potassium</div>
-                    </div>
-                    
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Dates</div>
-                        <div class="food-category">Fruit (Dry)</div>
-                        <div class="food-benefits">Iron, potassium, energy-dense</div>
-                    </div>
-                    
-                    <div class="food-card a-tier-card">
-                        <div class="food-name">Cantaloupe (Kharbuja)</div>
-                        <div class="food-category">Fruit</div>
-                        <div class="food-benefits">Beta-carotene, water, vitamin C</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- COMPARISON TABLE -->
-            <div class="comparison-section">
-                <h2 class="comparison-title">✅ What Makes S-TIER vs. A-TIER?</h2>
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Factor</th>
-                            <th>S-TIER 🔥</th>
-                            <th>A-TIER 👍</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Nutrient Density</strong></td>
-                            <td class="s-tier-cell">Extremely high in <strong>multiple nutrients</strong></td>
-                            <td class="a-tier-cell">High but slightly limited to specific benefits</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Functional Benefits</strong></td>
-                            <td class="s-tier-cell">Strong effect on <strong>multiple systems</strong> (e.g. immune, heart, digestion)</td>
-                            <td class="a-tier-cell">More specific or moderate impact</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Usage Versatility</strong></td>
-                            <td class="s-tier-cell">Can be used in various forms — raw, cooked, soaked</td>
-                            <td class="a-tier-cell">Often used in limited or small portions</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+                    <div class="food-card a-tier">
+                        <div class="food-header">
+                            <h3 class="food-name">Apples</h3>
+                            <span class="food-category">Fruit</span>
+                        </div
