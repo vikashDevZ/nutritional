@@ -25,6 +25,7 @@
             --fruit: #ec4899;
             --root-herb: #eab308;
             --leafy-herb: #4ade80;
+            --star-color: #FFD700; /* Gold for star */
         }
 
         * {
@@ -165,26 +166,14 @@
             cursor: pointer;
         }
 
-        .food-item[data-top="true"] {
-            position: relative;
-        }
-
         .food-item[data-top="true"] .food-name::before {
             content: '★';
             font-size: 0.9rem;
             margin-right: 0.5rem;
             vertical-align: middle;
+            color: var(--star-color);
+            text-shadow: 0 0 4px rgba(255, 215, 0, 0.5); /* Subtle glow for shiny effect */
         }
-
-        .leafy-veg .food-item[data-top="true"] .food-name::before { color: var(--leafy-veg); }
-        .vegetable .food-item[data-top="true"] .food-name::before { color: var(--vegetable); }
-        .root-veg .food-item[data-top="true"] .food-name::before { color: var(--root-veg); }
-        .legume .food-item[data-top="true"] .food-name::before { color: var(--legume); }
-        .seed .food-item[data-top="true"] .food-name::before { color: var(--seed); }
-        .nut .food-item[data-top="true"] .food-name::before { color: var(--nut); }
-        .fruit .food-item[data-top="true"] .food-name::before { color: var(--fruit); }
-        .root-herb .food-item[data-top="true"] .food-name::before { color: var(--root-herb); }
-        .leafy-herb .food-item[data-top="true"] .food-name::before { color: var(--leafy-herb); }
 
         .s-tier .food-item:hover {
             transform: translateY(-5px);
@@ -196,11 +185,6 @@
             transform: translateY(-5px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
             border: 2px solid var(--a-tier-accent);
-        }
-
-        .food-item[data-top="true"]:hover {
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), 0 0 8px currentColor;
         }
 
         .food-name {
