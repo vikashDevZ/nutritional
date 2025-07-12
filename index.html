@@ -14,6 +14,8 @@
             --text-secondary: #4a5568;
             --s-tier-accent: #3b82f6;
             --a-tier-accent: #f59e0b;
+            --s-tier-bg: #e6f0ff;
+            --a-tier-bg: #fff7e6;
             --leafy-veg: #10b981;
             --vegetable: #ef4444;
             --root-veg: #f97316;
@@ -68,13 +70,15 @@
         }
 
         .tier-card {
-            background: var(--bg-secondary);
             border-radius: 1rem;
             padding: 2.5rem;
             margin-bottom: 3rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .s-tier { background: var(--s-tier-bg); }
+        .a-tier { background: var(--a-tier-bg); }
 
         .tier-card:hover {
             transform: translateY(-5px);
@@ -86,11 +90,20 @@
             font-size: 2.25rem;
             font-weight: 700;
             margin-bottom: 2rem;
-            background: linear-gradient(45deg, var(--s-tier-accent), var(--a-tier-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             position: relative;
             padding-bottom: 0.5rem;
+        }
+
+        .s-tier .tier-title {
+            background: linear-gradient(45deg, var(--s-tier-accent), #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .a-tier .tier-title {
+            background: linear-gradient(45deg, var(--a-tier-accent), #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .s-tier .tier-title::after {
@@ -149,11 +162,45 @@
             padding: 1.5rem;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+            cursor: pointer;
         }
 
-        .food-item:hover {
+        .food-item[data-top="true"] {
+            position: relative;
+        }
+
+        .food-item[data-top="true"] .food-name::before {
+            content: '★';
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .leafy-veg .food-item[data-top="true"] .food-name::before { color: var(--leafy-veg); }
+        .vegetable .food-item[data-top="true"] .food-name::before { color: var(--vegetable); }
+        .root-veg .food-item[data-top="true"] .food-name::before { color: var(--root-veg); }
+        .legume .food-item[data-top="true"] .food-name::before { color: var(--legume); }
+        .seed .food-item[data-top="true"] .food-name::before { color: var(--seed); }
+        .nut .food-item[data-top="true"] .food-name::before { color: var(--nut); }
+        .fruit .food-item[data-top="true"] .food-name::before { color: var(--fruit); }
+        .root-herb .food-item[data-top="true"] .food-name::before { color: var(--root-herb); }
+        .leafy-herb .food-item[data-top="true"] .food-name::before { color: var(--leafy-herb); }
+
+        .s-tier .food-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--s-tier-accent);
+        }
+
+        .a-tier .food-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--a-tier-accent);
+        }
+
+        .food-item[data-top="true"]:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), 0 0 8px currentColor;
         }
 
         .food-name {
@@ -197,15 +244,56 @@
         .root-herb .food-highlights { color: #b45309; }
         .leafy-herb .food-highlights { color: #15803d; }
 
-        .leafy-veg .food-item:hover { border: 2px solid var(--leafy-veg); }
-        .vegetable .food-item:hover { border: 2px solid var(--vegetable); }
-        .root-veg .food-item:hover { border: 2px solid var(--root-veg); }
-        .legume .food-item:hover { border: 2px solid var(--legume); }
-        .seed .food-item:hover { border: 2px solid var(--seed); }
-        .nut .food-item:hover { border: 2px solid var(--nut); }
-        .fruit .food-item:hover { border: 2px solid var(--fruit); }
-        .root-herb .food-item:hover { border: 2px solid var(--root-herb); }
-        .leafy-herb .food-item:hover { border: 2px solid var(--leafy-herb); }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .modal-content h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
         @keyframes fadeIn {
             0% { opacity: 0; transform: translateY(-20px); }
@@ -225,6 +313,7 @@
             .header p { font-size: 1rem; }
             .tier-card { padding: 1.5rem; }
             .food-grid { grid-template-columns: 1fr; }
+            .modal-content { width: 95%; }
         }
     </style>
 </head>
@@ -235,29 +324,39 @@
             <p>Explore the best foods for optimal health and vitality</p>
         </div>
 
+        <!-- Modal -->
+        <div class="modal" id="foodModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">×</span>
+                <h3 id="modalFoodName"></h3>
+                <p id="modalHighlights"></p>
+                <p id="modalDailyIntake"></p>
+            </div>
+        </div>
+
         <!-- S-TIER -->
         <div class="tier-card s-tier">
             <h2 class="tier-title">S-TIER SUPERFOODS</h2>
             <div class="category leafy-veg">
                 <div class="category-title">Leafy Vegetables</div>
                 <div class="food-grid">
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-top="true" data-name="Moringa Leaves" data-highlights="Iron, calcium, vitamins A & C, antioxidants, inflammation fighter" data-intake="1–2 cups (30–60g) fresh or 1–2 tsp powder">
                         <div class="food-name">Moringa Leaves</div>
                         <div class="food-highlights">Iron, calcium, vitamins A & C, antioxidants, inflammation fighter</div>
                     </div>
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-name="Spinach" data-highlights="Iron, folate, magnesium, vitamin K" data-intake="1–2 cups (30–60g) fresh or cooked">
                         <div class="food-name">Spinach</div>
                         <div class="food-highlights">Iron, folate, magnesium, vitamin K</div>
                     </div>
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-name="Amaranth Leaves (Chaulai)" data-highlights="Protein, calcium, iron, antioxidants" data-intake="1–2 cups (30–60g) cooked">
                         <div class="food-name">Amaranth Leaves (Chaulai)</div>
                         <div class="food-highlights">Protein, calcium, iron, antioxidants</div>
                     </div>
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-name="Kale" data-highlights="Vitamins A, C, K, fiber, anti-cancer compounds" data-intake="1–2 cups (30–60g) fresh or cooked">
                         <div class="food-name">Kale</div>
                         <div class="food-highlights">Vitamins A, C, K, fiber, anti-cancer compounds</div>
                     </div>
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-name="Watercress" data-highlights="Vitamins C, K, calcium, antioxidants" data-intake="1–2 cups (34–68g) fresh">
                         <div class="food-name">Watercress</div>
                         <div class="food-highlights">Vitamins C, K, calcium, antioxidants</div>
                     </div>
@@ -266,23 +365,23 @@
             <div class="category vegetable">
                 <div class="category-title">Vegetables</div>
                 <div class="food-grid">
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-top="true" data-name="Broccoli" data-highlights="Vitamins C & K, fiber, sulforaphane" data-intake="1–2 cups (90–180g) cooked">
                         <div class="food-name">Broccoli</div>
                         <div class="food-highlights">Vitamins C & K, fiber, sulforaphane</div>
                     </div>
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-name="Carrot" data-highlights="Beta-carotene (A), fiber, antioxidants" data-intake="1–2 medium (60–120g) raw or cooked">
                         <div class="food-name">Carrot</div>
                         <div class="food-highlights">Beta-carotene (A), fiber, antioxidants</div>
                     </div>
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-name="Sweet Potato" data-highlights="Complex carbs, beta-carotene, potassium" data-intake="1 medium (130–150g) cooked">
                         <div class="food-name">Sweet Potato</div>
                         <div class="food-highlights">Complex carbs, beta-carotene, potassium</div>
                     </div>
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-name="Brussels Sprouts" data-highlights="Vitamins C & K, fiber, antioxidants" data-intake="1–2 cups (88–176g) cooked">
                         <div class="food-name">Brussels Sprouts</div>
                         <div class="food-highlights">Vitamins C & K, fiber, antioxidants</div>
                     </div>
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-name="Asparagus" data-highlights="Folate, fiber, vitamins A, C, E" data-intake="5–10 spears (90–180g) cooked">
                         <div class="food-name">Asparagus</div>
                         <div class="food-highlights">Folate, fiber, vitamins A, C, E</div>
                     </div>
@@ -291,23 +390,23 @@
             <div class="category legume">
                 <div class="category-title">Legumes</div>
                 <div class="food-grid">
-                    <div class="food-item legume">
+                    <div class="food-item legume" data-top="true" data-name="Chickpeas (Desi/Kabuli)" data-highlights="Protein, iron, fiber, magnesium" data-intake="½–1 cup (80–160g) cooked">
                         <div class="food-name">Chickpeas (Desi/Kabuli)</div>
                         <div class="food-highlights">Protein, iron, fiber, magnesium</div>
                     </div>
-                    <div class="food-item legume">
+                    <div class="food-item legume" data-name="Lentils (Masoor)" data-highlights="Iron, folate, plant protein" data-intake="½–1 cup (90–180g) cooked">
                         <div class="food-name">Lentils (Masoor)</div>
                         <div class="food-highlights">Iron, folate, plant protein</div>
                     </div>
-                    <div class="food-item legume">
+                    <div class="food-item legume" data-name="Green Moong (Whole)" data-highlights="Protein, fiber, B-complex, digestion-friendly" data-intake="½–1 cup (90–180g) cooked">
                         <div class="food-name">Green Moong (Whole)</div>
                         <div class="food-highlights">Protein, fiber, B-complex, digestion-friendly</div>
                     </div>
-                    <div class="food-item legume">
+                    <div class="food-item legume" data-name="Black Beans" data-highlights="Protein, fiber, antioxidants, heart health" data-intake="½–1 cup (85–170g) cooked">
                         <div class="food-name">Black Beans</div>
                         <div class="food-highlights">Protein, fiber, antioxidants, heart health</div>
                     </div>
-                    <div class="food-item legume">
+                    <div class="food-item legume" data-name="Edamame" data-highlights="Protein, fiber, vitamin K, folate" data-intake="½–1 cup (75–150g) cooked">
                         <div class="food-name">Edamame</div>
                         <div class="food-highlights">Protein, fiber, vitamin K, folate</div>
                     </div>
@@ -316,19 +415,19 @@
             <div class="category seed">
                 <div class="category-title">Seeds</div>
                 <div class="food-grid">
-                    <div class="food-item seed">
+                    <div class="food-item seed" data-top="true" data-name="Flaxseeds" data-highlights="Omega-3 (ALA), lignans, fiber" data-intake="1–2 tbsp (10–20g) ground">
                         <div class="food-name">Flaxseeds</div>
                         <div class="food-highlights">Omega-3 (ALA), lignans, fiber</div>
                     </div>
-                    <div class="food-item seed">
+                    <div class="food-item seed" data-name="Chia Seeds" data-highlights="Calcium, omega-3s, soluble fiber" data-intake="1–2 tbsp (12–24g)">
                         <div class="food-name">Chia Seeds</div>
                         <div class="food-highlights">Calcium, omega-3s, soluble fiber</div>
                     </div>
-                    <div class="food-item seed">
+                    <div class="food-item seed" data-name="Pumpkin Seeds" data-highlights="Zinc, magnesium, protein" data-intake="1–2 tbsp (10–20g)">
                         <div class="food-name">Pumpkin Seeds</div>
                         <div class="food-highlights">Zinc, magnesium, protein</div>
                     </div>
-                    <div class="food-item seed">
+                    <div class="food-item seed" data-name="Quinoa" data-highlights="Complete protein, magnesium, fiber" data-intake="½–1 cup (90–185g) cooked">
                         <div class="food-name">Quinoa</div>
                         <div class="food-highlights">Complete protein, magnesium, fiber</div>
                     </div>
@@ -337,19 +436,19 @@
             <div class="category nut">
                 <div class="category-title">Nuts</div>
                 <div class="food-grid">
-                    <div class="food-item nut">
+                    <div class="food-item nut" data-top="true" data-name="Almonds" data-highlights="Vitamin E, calcium, healthy fats" data-intake="1 oz (28g, ~23 nuts)">
                         <div class="food-name">Almonds</div>
                         <div class="food-highlights">Vitamin E, calcium, healthy fats</div>
                     </div>
-                    <div class="food-item nut">
+                    <div class="food-item nut" data-name="Walnuts" data-highlights="Omega-3 ALA, copper, brain health" data-intake="1 oz (28g, ~14 halves)">
                         <div class="food-name">Walnuts</div>
                         <div class="food-highlights">Omega-3 ALA, copper, brain health</div>
                     </div>
-                    <div class="food-item nut">
+                    <div class="food-item nut" data-name="Pistachios" data-highlights="B6, lutein, antioxidants" data-intake="1 oz (28g, ~49 nuts)">
                         <div class="food-name">Pistachios</div>
                         <div class="food-highlights">B6, lutein, antioxidants</div>
                     </div>
-                    <div class="food-item nut">
+                    <div class="food-item nut" data-name="Brazil Nuts" data-highlights="Selenium (1–2 nuts = 100% daily need)" data-intake="1–2 nuts (5–10g)">
                         <div class="food-name">Brazil Nuts</div>
                         <div class="food-highlights">Selenium (1–2 nuts = 100% daily need)</div>
                     </div>
@@ -358,39 +457,39 @@
             <div class="category fruit">
                 <div class="category-title">Fruits</div>
                 <div class="food-grid">
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-top="true" data-name="Avocado" data-highlights="Healthy fats, potassium, vitamin E, fiber" data-intake="½–1 medium (70–140g)">
                         <div class="food-name">Avocado</div>
                         <div class="food-highlights">Healthy fats, potassium, vitamin E, fiber</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Guava" data-highlights="Highest vitamin C, fiber, A, folate" data-intake="1–2 medium (55–110g)">
                         <div class="food-name">Guava</div>
                         <div class="food-highlights">Highest vitamin C, fiber, A, folate</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Papaya" data-highlights="Digestive enzymes, vitamins A & C, beta-carotene" data-intake="1 cup (140–280g)">
                         <div class="food-name">Papaya</div>
                         <div class="food-highlights">Digestive enzymes, vitamins A & C, beta-carotene</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Pomegranate" data-highlights="Polyphenols, iron, potassium, anti-inflammatory" data-intake="½–1 cup seeds (87–174g)">
                         <div class="food-name">Pomegranate</div>
                         <div class="food-highlights">Polyphenols, iron, potassium, anti-inflammatory</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Amla (Indian Gooseberry)" data-highlights="10x more vitamin C than orange, strong antioxidant" data-intake="1–2 small (10–20g)">
                         <div class="food-name">Amla (Indian Gooseberry)</div>
                         <div class="food-highlights">10x more vitamin C than orange, strong antioxidant</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Blueberries" data-highlights="Anthocyanins, brain-protective antioxidants" data-intake="½–1 cup (75–150g)">
                         <div class="food-name">Blueberries</div>
                         <div class="food-highlights">Anthocyanins, brain-protective antioxidants</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Kiwi" data-highlights="Vitamins C & E, fiber, immune support" data-intake="1–2 medium (70–140g)">
                         <div class="food-name">Kiwi</div>
                         <div class="food-highlights">Vitamins C & E, fiber, immune support</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Acai Berries" data-highlights="Antioxidants, fiber, heart-healthy fats" data-intake="1–2 tbsp (10–20g) frozen or powder">
                         <div class="food-name">Acai Berries</div>
                         <div class="food-highlights">Antioxidants, fiber, heart-healthy fats</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Goji Berries" data-highlights="Antioxidants, vitamin A, immune support" data-intake="1–2 tbsp (10–20g) dried">
                         <div class="food-name">Goji Berries</div>
                         <div class="food-highlights">Antioxidants, vitamin A, immune support</div>
                     </div>
@@ -399,11 +498,11 @@
             <div class="category root-herb">
                 <div class="category-title">Root Herbs</div>
                 <div class="food-grid">
-                    <div class="food-item root-herb">
+                    <div class="food-item root-herb" data-top="true" data-name="Turmeric (Root or Powder)" data-highlights="Curcumin = anti-inflammatory, liver support" data-intake="1–2 tsp (2–4g) powder or ½ inch root">
                         <div class="food-name">Turmeric (Root or Powder)</div>
                         <div class="food-highlights">Curcumin = anti-inflammatory, liver support</div>
                     </div>
-                    <div class="food-item root-herb">
+                    <div class="food-item root-herb" data-name="Ginger" data-highlights="Digestion, inflammation, circulation" data-intake="1–2 tsp (2–4g) grated or ½ inch root">
                         <div class="food-name">Ginger</div>
                         <div class="food-highlights">Digestion, inflammation, circulation</div>
                     </div>
@@ -412,11 +511,11 @@
             <div class="category leafy-herb">
                 <div class="category-title">Leafy Herbs</div>
                 <div class="food-grid">
-                    <div class="food-item leafy-herb">
+                    <div class="food-item leafy-herb" data-top="true" data-name="Curry Leaves" data-highlights="Iron, calcium, antioxidant, hair & digestion support" data-intake="10–15 leaves (2–3g)">
                         <div class="food-name">Curry Leaves</div>
                         <div class="food-highlights">Iron, calcium, antioxidant, hair & digestion support</div>
                     </div>
-                    <div class="food-item leafy-herb">
+                    <div class="food-item leafy-herb" data-name="Holy Basil (Tulsi)" data-highlights="Antioxidants, anti-inflammatory, stress relief" data-intake="5–10 leaves (1–2g) or 1 tsp dried">
                         <div class="food-name">Holy Basil (Tulsi)</div>
                         <div class="food-highlights">Antioxidants, anti-inflammatory, stress relief</div>
                     </div>
@@ -430,23 +529,23 @@
             <div class="category leafy-veg">
                 <div class="category-title">Leafy Vegetables</div>
                 <div class="food-grid">
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-top="true" data-name="Mustard Greens (Sarson)" data-highlights="Vitamins K, calcium, A" data-intake="1–2 cups (30–60g) cooked">
                         <div class="food-name">Mustard Greens (Sarson)</div>
                         <div class="food-highlights">Vitamins K, calcium, A</div>
                     </div>
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-name="Radish Leaves" data-highlights="Calcium, iron, vitamin C" data-intake="1–2 cups (30–60g) cooked">
                         <div class="food-name">Radish Leaves</div>
                         <div class="food-highlights">Calcium, iron, vitamin C</div>
                     </div>
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-name="Fenugreek Leaves (Methi)" data-highlights="Iron, fiber, supports blood sugar" data-intake="1–2 cups (30–60g) cooked">
                         <div class="food-name">Fenugreek Leaves (Methi)</div>
                         <div class="food-highlights">Iron, fiber, supports blood sugar</div>
                     </div>
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-name="Swiss Chard" data-highlights="Vitamins A, C, K, magnesium" data-intake="1–2 cups (30–60g) cooked">
                         <div class="food-name">Swiss Chard</div>
                         <div class="food-highlights">Vitamins A, C, K, magnesium</div>
                     </div>
-                    <div class="food-item leafy-veg">
+                    <div class="food-item leafy-veg" data-name="Arugula" data-highlights="Vitamins C, K, folate, antioxidants" data-intake="1–2 cups (20–40g) fresh">
                         <div class="food-name">Arugula</div>
                         <div class="food-highlights">Vitamins C, K, folate, antioxidants</div>
                     </div>
@@ -455,15 +554,15 @@
             <div class="category root-veg">
                 <div class="category-title">Root Vegetables</div>
                 <div class="food-grid">
-                    <div class="food-item root-veg">
+                    <div class="food-item root-veg" data-top="true" data-name="Beetroot" data-highlights="Folate, fiber, blood pressure & stamina" data-intake="1–2 medium (80–160g) cooked">
                         <div class="food-name">Beetroot</div>
                         <div class="food-highlights">Folate, fiber, blood pressure & stamina</div>
                     </div>
-                    <div class="food-item root-veg">
+                    <div class="food-item root-veg" data-name="Radish" data-highlights="Vitamin C, fiber, digestive health" data-intake="½–1 cup (60–120g) raw">
                         <div class="food-name">Radish</div>
                         <div class="food-highlights">Vitamin C, fiber, digestive health</div>
                     </div>
-                    <div class="food-item root-veg">
+                    <div class="food-item root-veg" data-name="Parsnip" data-highlights="Fiber, vitamin C, folate" data-intake="1–2 medium (80–160g) cooked">
                         <div class="food-name">Parsnip</div>
                         <div class="food-highlights">Fiber, vitamin C, folate</div>
                     </div>
@@ -472,19 +571,19 @@
             <div class="category vegetable">
                 <div class="category-title">Vegetables</div>
                 <div class="food-grid">
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-top="true" data-name="Drumstick Pods" data-highlights="Vitamin C, fiber, anti-inflammatory" data-intake="½–1 cup (50–100g) cooked">
                         <div class="food-name">Drumstick Pods</div>
                         <div class="food-highlights">Vitamin C, fiber, anti-inflammatory</div>
                     </div>
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-name="Tomato" data-highlights="Lycopene, vitamin C, potassium" data-intake="1–2 medium (120–240g) raw or cooked">
                         <div class="food-name">Tomato</div>
                         <div class="food-highlights">Lycopene, vitamin C, potassium</div>
                     </div>
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-name="Bell Peppers" data-highlights="Vitamins C & A, antioxidants" data-intake="1–2 medium (120–240g) raw or cooked">
                         <div class="food-name">Bell Peppers</div>
                         <div class="food-highlights">Vitamins C & A, antioxidants</div>
                     </div>
-                    <div class="food-item vegetable">
+                    <div class="food-item vegetable" data-name="Zucchini" data-highlights="Vitamin C, fiber, hydration" data-intake="1–2 cups (120–240g) cooked">
                         <div class="food-name">Zucchini</div>
                         <div class="food-highlights">Vitamin C, fiber, hydration</div>
                     </div>
@@ -493,15 +592,15 @@
             <div class="category legume">
                 <div class="category-title">Legumes</div>
                 <div class="food-grid">
-                    <div class="food-item legume">
+                    <div class="food-item legume" data-top="true" data-name="Horse Gram (Kulthi)" data-highlights="Weight loss, iron, calcium" data-intake="½–1 cup (80–160g) cooked">
                         <div class="food-name">Horse Gram (Kulthi)</div>
                         <div class="food-highlights">Weight loss, iron, calcium</div>
                     </div>
-                    <div class="food-item legume">
+                    <div class="food-item legume" data-name="Toor Dal (Arhar)" data-highlights="Protein, folate, energy" data-intake="½–1 cup (90–180g) cooked">
                         <div class="food-name">Toor Dal (Arhar)</div>
                         <div class="food-highlights">Protein, folate, energy</div>
                     </div>
-                    <div class="food-item legume">
+                    <div class="food-item legume" data-name="Kidney Beans" data-highlights="Protein, fiber, iron" data-intake="½–1 cup (85–170g) cooked">
                         <div class="food-name">Kidney Beans</div>
                         <div class="food-highlights">Protein, fiber, iron</div>
                     </div>
@@ -510,15 +609,15 @@
             <div class="category seed">
                 <div class="category-title">Seeds</div>
                 <div class="food-grid">
-                    <div class="food-item seed">
+                    <div class="food-item seed" data-top="true" data-name="Hemp Seeds" data-highlights="Complete protein, omega-3 & 6" data-intake="1–2 tbsp (10–20g)">
                         <div class="food-name">Hemp Seeds</div>
                         <div class="food-highlights">Complete protein, omega-3 & 6</div>
                     </div>
-                    <div class="food-item seed">
+                    <div class="food-item seed" data-name="Sunflower Seeds" data-highlights="Vitamin E, selenium, magnesium" data-intake="1–2 tbsp (10–20g)">
                         <div class="food-name">Sunflower Seeds</div>
                         <div class="food-highlights">Vitamin E, selenium, magnesium</div>
                     </div>
-                    <div class="food-item seed">
+                    <div class="food-item seed" data-name="Sesame Seeds (Til)" data-highlights="Calcium, zinc, iron" data-intake="1–2 tbsp (9–18g)">
                         <div class="food-name">Sesame Seeds (Til)</div>
                         <div class="food-highlights">Calcium, zinc, iron</div>
                     </div>
@@ -527,15 +626,15 @@
             <div class="category nut">
                 <div class="category-title">Nuts</div>
                 <div class="food-grid">
-                    <div class="food-item nut">
+                    <div class="food-item nut" data-top="true" data-name="Cashews" data-highlights="Copper, magnesium, iron" data-intake="1 oz (28g, ~18 nuts)">
                         <div class="food-name">Cashews</div>
                         <div class="food-highlights">Copper, magnesium, iron</div>
                     </div>
-                    <div class="food-item nut">
+                    <div class="food-item nut" data-name="Hazelnuts" data-highlights="Vitamin E, manganese" data-intake="1 oz (28g, ~21 nuts)">
                         <div class="food-name">Hazelnuts</div>
                         <div class="food-highlights">Vitamin E, manganese</div>
                     </div>
-                    <div class="food-item nut">
+                    <div class="food-item nut" data-name="Macadamia Nuts" data-highlights="Healthy fats, manganese, fiber" data-intake="1 oz (28g, ~10–12 nuts)">
                         <div class="food-name">Macadamia Nuts</div>
                         <div class="food-highlights">Healthy fats, manganese, fiber</div>
                     </div>
@@ -544,35 +643,35 @@
             <div class="category fruit">
                 <div class="category-title">Fruits</div>
                 <div class="food-grid">
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-top="true" data-name="Orange" data-highlights="Vitamin C, hydration, fiber" data-intake="1–2 medium (130–260g)">
                         <div class="food-name">Orange</div>
                         <div class="food-highlights">Vitamin C, hydration, fiber</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Banana" data-highlights="Potassium, B6, natural energy" data-intake="1–2 medium (120–240g)">
                         <div class="food-name">Banana</div>
                         <div class="food-highlights">Potassium, B6, natural energy</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Apples" data-highlights="Fiber (pectin), antioxidants, digestion aid" data-intake="1–2 medium (180–360g)">
                         <div class="food-name">Apples</div>
                         <div class="food-highlights">Fiber (pectin), antioxidants, digestion aid</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Figs (Anjeer)" data-highlights="Calcium, fiber, potassium" data-intake="2–3 medium (50–100g) fresh or dried">
                         <div class="food-name">Figs (Anjeer)</div>
                         <div class="food-highlights">Calcium, fiber, potassium</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Dates" data-highlights="Iron, potassium, energy-dense" data-intake="2–3 medium (15–24g) dried">
                         <div class="food-name">Dates</div>
                         <div class="food-highlights">Iron, potassium, energy-dense</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Cantaloupe (Kharbuja)" data-highlights="Beta-carotene, water, vitamin C" data-intake="1–2 cups (160–320g)">
                         <div class="food-name">Cantaloupe (Kharbuja)</div>
                         <div class="food-highlights">Beta-carotene, water, vitamin C</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Mango" data-highlights="Vitamins C & A, fiber, antioxidants" data-intake="1–2 cups (165–330g)">
                         <div class="food-name">Mango</div>
                         <div class="food-highlights">Vitamins C & A, fiber, antioxidants</div>
                     </div>
-                    <div class="food-item fruit">
+                    <div class="food-item fruit" data-name="Pineapple" data-highlights="Vitamin C, manganese, digestive enzymes" data-intake="1–2 cups (165–330g)">
                         <div class="food-name">Pineapple</div>
                         <div class="food-highlights">Vitamin C, manganese, digestive enzymes</div>
                     </div>
@@ -581,11 +680,11 @@
             <div class="category leafy-herb">
                 <div class="category-title">Leafy Herbs</div>
                 <div class="food-grid">
-                    <div class="food-item leafy-herb">
+                    <div class="food-item leafy-herb" data-top="true" data-name="Coriander Leaves" data-highlights="Vitamins C & A, detox aid" data-intake="1–2 tbsp (2–4g) fresh">
                         <div class="food-name">Coriander Leaves</div>
                         <div class="food-highlights">Vitamins C & A, detox aid</div>
                     </div>
-                    <div class="food-item leafy-herb">
+                    <div class="food-item leafy-herb" data-name="Parsley" data-highlights="Vitamins C, K, antioxidants" data-intake="1–2 tbsp (2–4g) fresh">
                         <div class="food-name">Parsley</div>
                         <div class="food-highlights">Vitamins C, K, antioxidants</div>
                     </div>
@@ -593,5 +692,43 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const foodItems = document.querySelectorAll('.food-item');
+        const modal = document.getElementById('foodModal');
+        const modalFoodName = document.getElementById('modalFoodName');
+        const modalHighlights = document.getElementById('modalHighlights');
+        const modalDailyIntake = document.getElementById('modalDailyIntake');
+
+        foodItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const name = item.getAttribute('data-name');
+                const highlights = item.getAttribute('data-highlights');
+                const intake = item.getAttribute('data-intake');
+
+                modalFoodName.textContent = name;
+                modalHighlights.textContent = `Highlights: ${highlights}`;
+                modalDailyIntake.textContent = `Recommended Daily Intake (Adult): ${intake}`;
+
+                modal.style.display = 'flex';
+            });
+        });
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
